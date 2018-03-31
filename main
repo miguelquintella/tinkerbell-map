@@ -1,0 +1,45 @@
+import matplotlib.pyplot as plt
+
+class point():
+
+    def __init__(self, x, y, a = 0.9, b = -0.6013, c = 2.0, d = 0.5):
+        self.x = x
+        self.y = y
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
+    def location(self):
+        return (self.x, self.y)
+
+    #translocates the point to the next location
+
+    def next_location(self):
+        a = self.a
+        b = self.b
+        c = self.c
+        d = self.d
+        xo = self.x
+        yo = self.y
+
+        self.x = (xo**2) - (yo**2) + (a * xo) + (b * yo)
+        self.y = (2 * xo * yo) + (c * xo) + (d * yo)
+
+        return (self.x, self.y)
+
+def list_of_locations(x0, y0, count, plot = True):
+    p = point(x0, y0)
+    locations = []
+    for i in range(count):
+        location = p.location()
+        locations.append(location)
+        p.next_location()
+
+    if plot == True:
+        plt.plot(*zip(*locations), 'b.', markersize=1)
+        plt.show()
+    return locations
+
+
+if __name__ == '__main__':
+    list_of_locations(-0.72, -0.64, 50000)
